@@ -155,7 +155,7 @@ const DefinitionItem = ({ node }) => {
         {subLabel && <span> - {subLabel}</span>}
         <div className="definition-desc">{description}</div>
         {children?.map((child) => (
-          <DefinitionItem node={child} />
+          <DefinitionItem key={child.label} node={child} />
         ))}
       </div>
     </div>
@@ -296,16 +296,12 @@ const Rules = () => {
           It should accept a <code>state</code> object which holds the
           information it'll need to decide on its move:
         </p>
-        <p>
-          <Definition node={tree} />
-        </p>
+        <Definition node={tree} />
         <p>
           Remember to return an object, we'll call this object an{' '}
           <code>answer</code>, which will tell the game which cell to play on:
         </p>
-        <p>
-          <Definition node={answer} />
-        </p>
+        <Definition node={answer} />
       </div>
     </div>
   );
