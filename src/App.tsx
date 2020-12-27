@@ -250,7 +250,7 @@ const Rules = () => {
       <div id="rules">
         <h3>Introduction</h3>
         <p>
-          Tic Tac Toe FIGHT is a game where you can pit your own bot against
+          Tic Tac Toe Arena is a platform where you can pit your own bot against
           another in a Tic Tac Toe showdown!
         </p>
         <p>Begin by selecting the type of player from the dropdown list.</p>
@@ -312,7 +312,7 @@ function App({}: AppProps) {
 
   return (
     <div className="app">
-      <h1>Tic Tac Toe FIGHT!</h1>
+      <h1>Tic Tac Toe Arena</h1>
       <Game game={new GameManager(state)} />
 
       <div className="form">
