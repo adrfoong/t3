@@ -54,6 +54,7 @@
 
 .form {
   width: 50vw;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
@@ -143,7 +144,7 @@ select {
   --blue-sub: #c8eef7;
 
   --yellow-main: #fa520d;
-  --yellow-sub: #f8f0c2;
+  --yellow-sub: #f8d3c2;
 
   --button-main-color: var(--yellow-main);
   --button-sub-color: var(--yellow-sub);
@@ -180,7 +181,104 @@ select {
   border-color: gray;
 }
 
-/* button:disabled {
-  background-color: gainsboro;
-  border-color: gray;
-} */
+.rules {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: hidden;
+  height: 500px;
+  position: fixed;
+  bottom: 50px;
+  transition: bottom 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94) 0s;
+
+  /* bottom: -475px; */
+}
+
+#rules-link {
+  display: none;
+}
+
+#rules {
+  border: 2px solid var(--button-main-color);
+  border-radius: 0.375rem;
+  background-color: white;
+  padding: 10px 20px;
+  height: 500px;
+  width: 700px;
+  overflow-y: auto;
+}
+
+#rules-link:checked ~ .rules {
+  bottom: -468px;
+}
+
+#rules-link-label {
+  font-weight: 700;
+  padding: 7px;
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  border: 2px solid var(--button-main-color);
+  border-bottom-width: 0;
+  color: white;
+  background-color: var(--button-main-color);
+}
+
+#rules-link-label:hover {
+  cursor: pointer;
+
+  color: var(--button-main-color);
+  background-color: white;
+}
+
+#rules-link:checked ~ #rules-link-label::before {
+  content: 'Hide ';
+}
+
+#rules-link:not(:checked) ~ #rules-link-label::before {
+  content: 'Show ';
+}
+
+.definition-container {
+  border-radius: 0.375rem;
+  border: 2px solid var(--blue-main);
+  /* background-color: var(--button-sub-color); */
+  font-size: 0.8rem;
+  padding: 10px;
+}
+
+.definition-container > .definition {
+  padding-top: 0;
+}
+
+.definition {
+  display: flex;
+  padding-top: 10px;
+}
+
+.definition-block > .definition {
+  padding-left: 20px;
+}
+
+.definition-desc {
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+:root {
+  --code-blue-main: #125984;
+  --code-blue-sub: #f2faff;
+
+  --code-green-main: #307913;
+  --code-green-sub: #f2faf3;
+
+  --code-red-main: #c7254e;
+  --code-red-sub: #f9f2f4;
+}
+
+code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: var(--code-blue-main);
+  background-color: var(--code-blue-sub);
+  border-radius: 4px;
+}
