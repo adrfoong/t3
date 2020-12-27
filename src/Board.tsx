@@ -116,6 +116,10 @@ export const Game = ({ game }) => {
       onSwapStartPlayer: () => {
         setState({});
       },
+      onError: (e) => {
+        console.error('Player error', e);
+        setState({});
+      },
     };
     game.hooks = hooks;
   }, [game]);

@@ -109,6 +109,21 @@ export default class GameManager {
     return this.winner || !this.cells.some((cell) => !cell.symbol);
   }
 
+  strike = (id) => {
+    this.history.push({ cell: id, player: this.player, status: 'FAILURE' });
+    if (this.strikeCount === 2) {
+      let otherPlayer = this.players.find(
+        (player) => player.id !== this.player.id,
+      );
+      console.log(`TOO MANY INVALID MOVES. ${otherPlayer.symbol} WINS`);
+      this.winner = otherPlayer;
+      this.runHook('onWin', { winner: this.winner });
+    } else {
+      console.log('INVALID MOVE. TRY AGAIN');
+      this.strikeCount++;
+    }
+  };
+
   updateLoop = (id) => {
     console.log(id, this.player);
     if (this.winner) {
@@ -119,7 +134,7 @@ export default class GameManager {
     /**
      * Move valid if cell is no already occupied
      */
-    let validMove = !this.cells[id].symbol;
+    let validMove = id >= 0 && id < 9 && !this.cells[id].symbol;
     if (validMove) {
       this.history.push({ cell: id, player: this.player, status: 'SUCCESS' });
       this.markCell(id, this.player.symbol);
@@ -127,19 +142,7 @@ export default class GameManager {
       this.strikeCount = 0;
       this.runHook('onMoveSuccess');
     } else {
-      this.history.push({ cell: id, player: this.player, status: 'FAILURE' });
-
-      if (this.strikeCount === 2) {
-        let otherPlayer = this.players.find(
-          (player) => player.id !== this.player.id,
-        );
-        console.log(`TOO MANY INVALID MOVES. ${otherPlayer.symbol} WINS`);
-        this.winner = otherPlayer;
-        this.runHook('onWin', { winner: this.winner });
-      } else {
-        console.log('INVALID MOVE. TRY AGAIN');
-        this.strikeCount++;
-      }
+      this.strike(id);
       this.runHook('onMoveFailure');
 
       return;
@@ -185,12 +188,16 @@ export default class GameManager {
   };
 
   runAutomatedPlay = async () => {
-    let position = this.getMove();
-    let cell = document.querySelectorAll('.cell')[position];
-    cell.classList.add('forced-hover');
-    await new Promise((r) => setTimeout(r, 300));
-
-    this.play(position);
+    try {
+      let position = this.getMove();
+      let cell = document.querySelectorAll('.cell')[position];
+      cell.classList.add('forced-hover');
+      await new Promise((r) => setTimeout(r, 300));
+      this.play(position);
+    } catch (e) {
+      this.strike('ERROR');
+      this.runHook('onError', e);
+    }
   };
 
   startAutomatedGame = async () => {

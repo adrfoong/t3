@@ -302,6 +302,15 @@ const Rules = () => {
           <code>answer</code>, which will tell the game which cell to play on:
         </p>
         <Definition node={answer} />
+        <h4>Failures</h4>
+        <p>
+          The game keeps track of the number of failing moves a player has made
+          each turn. A failure occurs when a player tries to play on an already
+          occupied cell, or if a bot player throws an error. This count will be
+          reset after a successful move. Once a player has reached the limit of
+          3 failing moves, the game will end and the other player will be the
+          winner. So be careful!
+        </p>
       </div>
     </div>
   );
